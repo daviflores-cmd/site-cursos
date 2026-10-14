@@ -1,25 +1,20 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
+import PrintButton from "./PrintButton";
 
-export default function CertificadoPage({
+export default async function CertificadoPage({
   params,
 }: {
   params: Promise<{ hash: string }>;
 }) {
-  const resolvedParams = React.use(params);
+  const { hash } = await params;
 
   const certificateData = {
     studentName: "Lucas Mendes Ferreira",
     courseName: "Next.js 15 & Arquitetura Frontend Avançada",
     hours: "18h 30min",
     completedAt: "13 de Outubro de 2026",
-    hash: resolvedParams.hash || "hash_a8f9d2e1c4b7",
-  };
-
-  const handlePrint = () => {
-    window.print();
+    hash: hash || "hash_a8f9d2e1c4b7",
   };
 
   return (
@@ -33,12 +28,7 @@ export default function CertificadoPage({
           ← Voltar aos Cursos
         </Link>
 
-        <button
-          onClick={handlePrint}
-          className="h-10 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all duration-200 flex items-center gap-2 cursor-pointer"
-        >
-          🖨 Imprimir / Baixar PDF
-        </button>
+        <PrintButton />
       </div>
 
       {/* DOCUMENTO DO CERTIFICADO (PIXEL-PERFECT LIGHT MODE) */}
