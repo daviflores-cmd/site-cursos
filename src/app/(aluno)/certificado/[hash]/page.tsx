@@ -1,23 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 import Link from "next/link";
 
 export default function CertificadoPage({
   params,
 }: {
-  params: { hash: string };
+  params: Promise<{ hash: string }>;
 }) {
+  const { hash } = use(params);
+
   const certificateData = {
     studentName: "Lucas Mendes Ferreira",
     courseName: "Next.js 15 & Arquitetura Frontend Avançada",
     hours: "18h 30min",
     completedAt: "13 de Outubro de 2026",
-    hash: params.hash || "hash_a8f9d2e1c4b7",
+    hash: hash || "hash_a8f9d2e1c4b7",
   };
 
   const handlePrint = () => {
-    window.print();
+    if (typeof window !== "undefined") {
+      window.print();
+    }
   };
 
   return (
@@ -33,6 +37,7 @@ export default function CertificadoPage({
 
         <button
           onClick={handlePrint}
+          type="button"
           className="h-10 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all duration-200 flex items-center gap-2 cursor-pointer"
         >
           🖨 Imprimir / Baixar PDF
